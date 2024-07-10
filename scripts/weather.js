@@ -1,4 +1,4 @@
-const apiKey = '92659bb91b326da2e3bc0d4ab09f3846';
+const apiKey = WEATHER_API;
 const city = 'Exeter';
 const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
