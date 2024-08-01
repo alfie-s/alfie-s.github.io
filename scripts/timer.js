@@ -16,14 +16,14 @@ function updateCountdown() {
     if (month === 7) {
         targetHour = 15;
         targetMinute = 0;
-        message = 'Time For Pub Free From Three Edition';
+        message = 'Time For Pub! - Free From Three Edition';
     }
 
-    // Add specific date check
-    if ((month === 7 && date === 1) || (month === 7 && date === 16)) {
-        targetHour = 21; // 12:00 PM
+
+    if ((month === 7 && date === 9) || (month === 7 && date === 16)) {
+        targetHour = 15;
         targetMinute = 0;
-        message = 'Time For Pub, Hey Canada Edition';
+        message = 'Time For Pub, Hey. - Canada Edition';
     }
 
     nextFriday.setHours(targetHour, targetMinute, 0, 0);
