@@ -3,20 +3,39 @@ function updateCountdown() {
     const dayOfWeek = now.getDay();
     const hours = now.getHours();
     const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
+    const month = now.getMonth();
+    const date = now.getDate();
 
     let nextFriday = new Date();
     nextFriday.setDate(now.getDate() + ((5 - dayOfWeek + 7) % 7));
-    nextFriday.setHours(16, 30, 0, 0); // 4:30 PM UK time
 
-    if (dayOfWeek === 5 && hours >= 16 && minutes >= 30) {
+    let targetHour = 16;
+    let targetMinute = 30;
+    let message = 'Time For Pub!';
+
+    if (month === 7) {
+        targetHour = 15;
+        targetMinute = 0;
+        message = 'Time For Pub Free From Three Edition';
+    }
+
+    // Add specific date check
+    if ((month === 7 && date === 1) || (month === 7 && date === 16)) {
+        targetHour = 21; // 12:00 PM
+        targetMinute = 0;
+        message = 'Time For Pub, Hey Canada Edition';
+    }
+
+    nextFriday.setHours(targetHour, targetMinute, 0, 0);
+
+    if (dayOfWeek === 5 && (hours > targetHour || (hours === targetHour && minutes >= targetMinute))) {
         const midnight = new Date(nextFriday);
         midnight.setDate(nextFriday.getDate() + 1);
         midnight.setHours(0, 0, 0, 0);
         const timeUntilMidnight = midnight - now;
 
         if (timeUntilMidnight > 0) {
-            document.getElementById('countdown').innerHTML = '<span class="message">Time For Pub!</span>';
+            document.getElementById('countdown').innerHTML = `<span class="message">${message}</span>`;
         } else {
             nextFriday.setDate(nextFriday.getDate() + 7);
         }
@@ -32,8 +51,8 @@ function updateCountdown() {
         const seconds = Math.floor((timeUntilFriday % (1000 * 60)) / 1000);
 
         document.getElementById('countdown').innerHTML = `
-                    ${days}d ${hours}h ${minutes}m ${seconds}s
-                `;
+            ${days}d ${hours}h ${minutes}m ${seconds}s
+        `;
     }
 }
 
