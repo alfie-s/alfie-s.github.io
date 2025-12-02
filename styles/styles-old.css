@@ -1,0 +1,73 @@
+body {
+    background-color: #000 !important;
+    color: #fff;
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    max-width: 100%;
+}
+h1 {
+    font-size: 7rem;
+}
+
+@media only screen and (max-width: 768px) {
+    h1 {
+        font-size: 4rem;
+    }
+
+}
+
+#weather {
+    margin-top: 20px;
+}
+.weather-icon {
+    width: 150px;
+    height: 150px;
+}
+
+
+ #countdown {
+     font-size: 2em;
+     margin-top: 20px;
+ }
+.message {
+    color: green;
+    font-weight: bold;
+}
+
+.crt::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+.crt::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+.crt {
+    animation: textShadow 1.6s infinite;
+}
+
+.ascii-art {
+    font-family: monospace;
+    white-space: pre;
+    color: red;
+}

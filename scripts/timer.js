@@ -19,11 +19,8 @@ function updateCountdown() {
         message = 'Time For Pub! - Free From Three Edition';
     }
 
-
-    if ((month === 7 && date === 9) || (month === 7 && date === 16)) {
-        targetHour = 15;
-        targetMinute = 0;
-        message = 'Time For Pub, Hey. - Canada Edition';
+    if (month === 12) {
+        message = 'Time For Pub! - Merry DESTMAS!';
     }
 
     nextFriday.setHours(targetHour, targetMinute, 0, 0);
