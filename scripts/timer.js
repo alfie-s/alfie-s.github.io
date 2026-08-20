@@ -5,6 +5,7 @@ function updateCountdown() {
     const minutes = now.getMinutes();
     const month = now.getMonth();
     const date = now.getDate();
+    const isAlfiesLastDay = now.getFullYear() === 2026 && month === 7 && date === 20;
 
     let nextFriday = new Date();
     nextFriday.setDate(now.getDate() + ((5 - dayOfWeek + 7) % 7));
@@ -19,13 +20,26 @@ function updateCountdown() {
         message = 'Time For Pub! - Free From Three Edition';
     }
 
+    if (isAlfiesLastDay) {
+        nextFriday = new Date(now);
+        targetHour = 17;
+        targetMinute = 30;
+        message = "Time for Pub! - Alfie's Last Day :(";
+    }
+
     if (month === 12) {
         message = 'Time For Pub! - Merry DESTMAS!';
     }
 
     nextFriday.setHours(targetHour, targetMinute, 0, 0);
+    const hasReachedTargetTime = hours > targetHour || (hours === targetHour && minutes >= targetMinute);
+    const lastDayGrave = document.getElementById('last-day-grave');
 
-    if (dayOfWeek === 5 && (hours > targetHour || (hours === targetHour && minutes >= targetMinute))) {
+    if (lastDayGrave) {
+        lastDayGrave.hidden = !(isAlfiesLastDay && hasReachedTargetTime);
+    }
+
+    if ((dayOfWeek === 5 || isAlfiesLastDay) && hasReachedTargetTime) {
         const midnight = new Date(nextFriday);
         midnight.setDate(nextFriday.getDate() + 1);
         midnight.setHours(0, 0, 0, 0);
