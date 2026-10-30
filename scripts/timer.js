@@ -1,3 +1,12 @@
+const isAndyBirthdayPreview = new URLSearchParams(window.location.search).get('test') === 'andy-birthday';
+
+function showAndysBirthdayMessage() {
+    document.getElementById('countdown').innerHTML = `
+        <span class="message">Happy Birthday Andy!</span>
+        <img src="assets/aperture-science-portal.gif" alt="Aperture Science portal">
+    `;
+}
+
 function updateCountdown() {
     const now = new Date();
     const dayOfWeek = now.getDay();
@@ -6,6 +15,17 @@ function updateCountdown() {
     const month = now.getMonth();
     const date = now.getDate();
     const isAlfiesLastDay = now.getFullYear() === 2026 && month === 7 && date === 20;
+    const isAndysBirthday = month === 9 && date === 31;
+    const lastDayGrave = document.getElementById('last-day-grave');
+
+    if (isAndyBirthdayPreview) {
+        if (lastDayGrave) {
+            lastDayGrave.hidden = true;
+        }
+
+        showAndysBirthdayMessage();
+        return;
+    }
 
     let nextFriday = new Date();
     nextFriday.setDate(now.getDate() + ((5 - dayOfWeek + 7) % 7));
@@ -27,26 +47,35 @@ function updateCountdown() {
         message = "Time for Pub! - Alfie's Last Day :(";
     }
 
+    if (isAndysBirthday) {
+        nextFriday = new Date(now);
+        targetHour = 16;
+        targetMinute = 30;
+    }
+
     if (month === 12) {
         message = 'Time For Pub! - Merry DESTMAS!';
     }
 
     nextFriday.setHours(targetHour, targetMinute, 0, 0);
     const hasReachedTargetTime = hours > targetHour || (hours === targetHour && minutes >= targetMinute);
-    const lastDayGrave = document.getElementById('last-day-grave');
 
     if (lastDayGrave) {
         lastDayGrave.hidden = !(isAlfiesLastDay && hasReachedTargetTime);
     }
 
-    if ((dayOfWeek === 5 || isAlfiesLastDay) && hasReachedTargetTime) {
+    if ((dayOfWeek === 5 || isAlfiesLastDay || isAndysBirthday) && hasReachedTargetTime) {
         const midnight = new Date(nextFriday);
         midnight.setDate(nextFriday.getDate() + 1);
         midnight.setHours(0, 0, 0, 0);
         const timeUntilMidnight = midnight - now;
 
         if (timeUntilMidnight > 0) {
-            document.getElementById('countdown').innerHTML = `<span class="message">${message}</span>`;
+            if (isAndysBirthday) {
+                showAndysBirthdayMessage();
+            } else {
+                document.getElementById('countdown').innerHTML = `<span class="message">${message}</span>`;
+            }
         } else {
             nextFriday.setDate(nextFriday.getDate() + 7);
         }
